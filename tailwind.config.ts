@@ -10,33 +10,43 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Dark theme colors - elegant dark palette
+        // Dark theme colors - sleek dark palette
         dark: {
-          900: '#0a0a0a',
-          800: '#141414',
-          700: '#1e1e1e',
-          600: '#2a2a2a',
-          500: '#3a3a3a',
-          400: '#4a4a4a',
+          950: '#000000',
+          900: '#0a0e1a',
+          800: '#141b2e',
+          700: '#1e2842',
+          600: '#2a3556',
+          500: '#3a4569',
         },
-        // Kodano brand colors - keeping existing palette
+        // Kodano brand colors - professional blue palette for fintech
         kodano: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          700: '#0369a1',
-          800: '#075985',
-          900: '#0c4a6e',
-          950: '#082f49',
+          50: '#eff6ff',
+          100: '#dbeafe',
+          200: '#bfdbfe',
+          300: '#93c5fd',
+          400: '#60a5fa',
+          500: '#3b82f6',
+          600: '#2563eb',
+          700: '#1d4ed8',
+          800: '#1e40af',
+          900: '#1e3a8a',
         },
-        // Accent color for highlights
+        // Accent color - modern purple for highlights
         accent: {
+          400: '#a78bfa',
           500: '#8b5cf6',
           600: '#7c3aed',
+          700: '#6d28d9',
+        },
+        // Success/Error colors
+        success: {
+          400: '#4ade80',
+          500: '#22c55e',
+        },
+        error: {
+          400: '#f87171',
+          500: '#ef4444',
         },
       },
       fontFamily: {
