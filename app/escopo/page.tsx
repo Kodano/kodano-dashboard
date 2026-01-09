@@ -16,6 +16,7 @@ interface Phase {
   name: string;
   description: string;
   color: string;
+  gradient: string;
   features: Feature[];
 }
 
@@ -25,6 +26,7 @@ const PHASES: Phase[] = [
     name: 'Gateway (Q1-Q3 2026)',
     description: 'Fase inicial como gateway de pagamentos. Foco em integrações com adquirentes e merchants.',
     color: 'blue',
+    gradient: 'from-blue-500 to-kodano-600',
     features: [
       {
         id: 'g1',
@@ -93,6 +95,7 @@ const PHASES: Phase[] = [
     name: 'Transição (Q4 2026 - Q1 2027)',
     description: 'Preparação e licenciamento para operar como subadquirente. Compliance e infraestrutura.',
     color: 'yellow',
+    gradient: 'from-yellow-500 to-orange-500',
     features: [
       {
         id: 't1',
@@ -149,6 +152,7 @@ const PHASES: Phase[] = [
     name: 'Subadquirente (Q2 2027+)',
     description: 'Operação completa como subadquirente com produtos financeiros.',
     color: 'green',
+    gradient: 'from-green-500 to-emerald-600',
     features: [
       {
         id: 's1',
@@ -215,9 +219,9 @@ const PHASES: Phase[] = [
 ];
 
 const PRIORITY_LABELS = {
-  must: { label: 'Must Have', color: 'bg-red-100 text-red-800 border-red-300' },
-  should: { label: 'Should Have', color: 'bg-yellow-100 text-yellow-800 border-yellow-300' },
-  could: { label: 'Could Have', color: 'bg-gray-100 text-gray-800 border-gray-300' },
+  must: { label: 'Must Have', color: 'bg-red-500/20 text-red-400 border-red-500/50' },
+  should: { label: 'Should Have', color: 'bg-yellow-500/20 text-yellow-400 border-yellow-500/50' },
+  could: { label: 'Could Have', color: 'bg-gray-500/20 text-gray-400 border-gray-500/50' },
 };
 
 export default function Escopo() {
@@ -225,31 +229,31 @@ export default function Escopo() {
   const currentPhase = PHASES.find(p => p.id === selectedPhase) || PHASES[0];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-dark-900">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-8 animate-fade-in">
           <Link
             href="/"
-            className="inline-flex items-center text-kodano-600 hover:text-kodano-700 mb-4"
+            className="inline-flex items-center text-kodano-400 hover:text-kodano-300 mb-6 transition-colors group"
           >
-            <ArrowLeftIcon className="w-5 h-5 mr-2" />
+            <ArrowLeftIcon className="w-5 h-5 mr-2 group-hover:-translate-x-1 transition-transform" />
             Voltar
           </Link>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-5xl font-bold text-gradient mb-2">
             Definição de Escopo
           </h1>
-          <p className="text-gray-600">
+          <p className="text-gray-400 font-inter">
             Features planejadas por fase: Gateway → Subadquirente
           </p>
         </div>
 
         {/* Legenda de Prioridades */}
-        <div className="bg-white rounded-lg shadow p-6 mb-8">
-          <h3 className="text-lg font-bold mb-4">MoSCoW Prioritization</h3>
+        <div className="card p-6 mb-8 animate-slide-up">
+          <h3 className="text-xl font-bold text-gray-100 mb-4">MoSCoW Prioritization</h3>
           <div className="flex flex-wrap gap-4">
             {Object.entries(PRIORITY_LABELS).map(([key, { label, color }]) => (
-              <div key={key} className={`px-4 py-2 rounded-lg border ${color}`}>
+              <div key={key} className={`badge border ${color}`}>
                 <span className="font-medium">{label}</span>
               </div>
             ))}
@@ -257,15 +261,15 @@ export default function Escopo() {
         </div>
 
         {/* Seletor de Fases */}
-        <div className="flex gap-4 mb-8 overflow-x-auto pb-2">
+        <div className="flex gap-4 mb-8 overflow-x-auto pb-2 animate-slide-up animation-delay-200">
           {PHASES.map((phase) => (
             <button
               key={phase.id}
               onClick={() => setSelectedPhase(phase.id)}
-              className={`px-6 py-3 rounded-lg font-medium whitespace-nowrap transition-all ${
+              className={`px-6 py-3 rounded-lg font-medium whitespace-nowrap transition-all transform ${
                 selectedPhase === phase.id
-                  ? `bg-${phase.color}-600 text-white shadow-lg`
-                  : `bg-white text-gray-700 hover:bg-gray-100`
+                  ? `bg-gradient-to-r ${phase.gradient} text-white shadow-lg scale-105`
+                  : `card hover:scale-105 text-gray-300`
               }`}
             >
               {phase.name}
@@ -274,56 +278,60 @@ export default function Escopo() {
         </div>
 
         {/* Descrição da Fase */}
-        <div className={`bg-${currentPhase.color}-50 rounded-lg p-6 mb-8 border-l-4 border-${currentPhase.color}-600`}>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">{currentPhase.name}</h2>
-          <p className="text-gray-700">{currentPhase.description}</p>
+        <div className={`card p-6 mb-8 border-l-4 border-${currentPhase.color}-500 animate-scale-in`}>
+          <h2 className="text-3xl font-bold text-gradient mb-3">{currentPhase.name}</h2>
+          <p className="text-gray-300 font-inter leading-relaxed">{currentPhase.description}</p>
         </div>
 
         {/* Features */}
         <div className="grid gap-6">
-          {currentPhase.features.map((feature) => {
+          {currentPhase.features.map((feature, index) => {
             const priorityConfig = PRIORITY_LABELS[feature.priority];
 
             return (
               <div
                 key={feature.id}
-                className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition-shadow"
+                className="card p-6 group hover:scale-[1.02] animate-slide-up"
+                style={{ animationDelay: `${index * 50}ms` }}
               >
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="text-xl font-bold text-gray-900 flex-1">{feature.name}</h3>
-                  <span className={`px-3 py-1 rounded-lg text-xs font-medium border ${priorityConfig.color} ml-4`}>
+                <div className="flex items-start justify-between mb-4 gap-4 flex-wrap">
+                  <h3 className="text-xl font-bold text-gray-100 flex-1 group-hover:text-gradient transition-all duration-300">
+                    {feature.name}
+                  </h3>
+                  <span className={`badge border ${priorityConfig.color}`}>
                     {priorityConfig.label}
                   </span>
                 </div>
-                <p className="text-gray-700">{feature.description}</p>
+                <p className="text-gray-400 font-inter leading-relaxed">{feature.description}</p>
               </div>
             );
           })}
         </div>
 
         {/* Resumo */}
-        <div className="mt-12 bg-white rounded-lg shadow-lg p-6">
-          <h3 className="text-xl font-bold mb-6">Resumo de Features por Fase</h3>
-          <div className="grid md:grid-cols-3 gap-6">
+        <div className="mt-12 card p-8 border-l-4 border-kodano-600 animate-fade-in">
+          <h3 className="text-2xl font-bold text-gradient mb-8">Resumo de Features por Fase</h3>
+          <div className="grid md:grid-cols-3 gap-8">
             {PHASES.map((phase) => (
-              <div key={phase.id} className={`p-6 rounded-lg bg-${phase.color}-50`}>
-                <h4 className="font-bold text-lg mb-4">{phase.name}</h4>
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Total:</span>
-                    <span className="font-bold">{phase.features.length}</span>
+              <div key={phase.id} className={`p-6 rounded-xl bg-${phase.color}-500/10 border border-${phase.color}-500/30`}>
+                <h4 className={`font-bold text-xl mb-6 text-${phase.color}-400`}>{phase.name}</h4>
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-300 font-inter">Total:</span>
+                    <span className="font-bold text-2xl text-gray-100">{phase.features.length}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-red-700">Must Have:</span>
-                    <span className="font-bold">{phase.features.filter(f => f.priority === 'must').length}</span>
+                  <div className="h-px bg-gray-700"></div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-red-400 font-inter">Must Have:</span>
+                    <span className="font-bold text-red-400">{phase.features.filter(f => f.priority === 'must').length}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-yellow-700">Should Have:</span>
-                    <span className="font-bold">{phase.features.filter(f => f.priority === 'should').length}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-yellow-400 font-inter">Should Have:</span>
+                    <span className="font-bold text-yellow-400">{phase.features.filter(f => f.priority === 'should').length}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-700">Could Have:</span>
-                    <span className="font-bold">{phase.features.filter(f => f.priority === 'could').length}</span>
+                  <div className="flex justify-between items-center">
+                    <span className="text-gray-400 font-inter">Could Have:</span>
+                    <span className="font-bold text-gray-400">{phase.features.filter(f => f.priority === 'could').length}</span>
                   </div>
                 </div>
               </div>

@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Kodano Dashboard - Planejamento Estratégico",
-  description: "Dashboard para gestão do plano de negócios Kodano: Gateway → Subadquirente",
+  description: "Dashboard pessoal para gestão estratégica Kodano: Gateway → Subadquirente",
 };
 
 export default function RootLayout({
@@ -12,8 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="pt-BR">
-      <body className="antialiased bg-gray-50">
+    <html lang="pt-BR" className="dark">
+      <body className="min-h-screen">
         {children}
       </body>
     </html>
