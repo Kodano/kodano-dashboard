@@ -44,7 +44,7 @@ export default function Home() {
           <div className="flex justify-center mb-8">
             <div className="relative w-32 h-32 hover:scale-110 transition-transform duration-300">
               <Image
-                src="/kodano-logo.svg"
+                src="/kodano-logo.png"
                 alt="Kodano Logo"
                 width={128}
                 height={128}
